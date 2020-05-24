@@ -1,0 +1,45 @@
+Código fonte.
+ackage com.example.alcool_gasolina;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+import com.google.android.material.textfield.TextInputEditText;
+public class MainActivity extends AppCompatActivity{
+    private TextInputEditText editPrecoAlcool, editPrecoGasolina;
+    private TextView textresultado;
+    @Override
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        editPrecoAlcool    = findViewById(R.id.editPrecoAlcool);
+        editPrecoGasolina  = findViewById(R.id.editPrecoGasolina);
+        textresultado      = findViewById(R.id.textresultado);
+    }
+    public void CalcularPreco(View view){
+        String precoAlcool    = editPrecoAlcool.getText().toString();
+        String precoGasolina  = editPrecoGasolina.getText().toString();
+        boolean camposValidados = validarCampos(precoAlcool, precoGasolina);
+        if (camposValidados){
+            Double valorAlcool    = Double.parseDouble(precoAlcool);
+            Double valorGasolina  = Double.parseDouble(precoGasolina);
+            Double resultado      = valorAlcool / valorGasolina;
+            if (resultado >= 0.7){
+                textresultado.setText("Melhor utilizar Gasolina!");
+            }else {
+                textresultado.setText("Melhor utilizar Álcool!");
+            }
+        }else {
+            textresultado.setText("Preencha os preços primeiro!");
+        }
+    }
+    public boolean validarCampos(String pAlcool, String pGasolina){
+        boolean camposValidados = true;
+        if (pAlcool == null || pAlcool.equals("")){
+            camposValidados = false;
+        }else if (pGasolina == null || pGasolina.equals("")){
+            camposValidados = false;
+        }
+        return camposValidados;
+    }
+}
